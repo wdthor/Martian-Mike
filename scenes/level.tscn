@@ -11,7 +11,7 @@
 size = Vector2(480, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0lrh4"]
-size = Vector2(675, 20)
+size = Vector2(992, 20)
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_ad10h")
@@ -38,7 +38,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Deathzone"]
-position = Vector2(327.5, 0)
+position = Vector2(319, 0)
 shape = SubResource("RectangleShape2D_0lrh4")
 
 [node name="StartPosition" type="Marker2D" parent="."]
@@ -58,7 +58,7 @@ position = Vector2(292, 187)
 position = Vector2(355, 167)
 
 [node name="Spike" parent="Traps" instance=ExtResource("6_mpq4p")]
-position = Vector2(135, 169)
+position = Vector2(57, 173)
 
 [connection signal="body_entered" from="Deathzone" to="." method="_on_deathzone_body_entered"]
 [connection signal="touched_player" from="Traps/Saw" to="." method="_on_trap_touched_player"]

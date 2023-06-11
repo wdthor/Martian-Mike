@@ -13,7 +13,7 @@ func _physics_process(delta):
 #		Prevents increasing the velocity more
 		if velocity.y > 500:
 			velocity.y = 500
-		print(velocity.y)
+
 		
 	if Input.is_action_just_pressed("jump") && is_on_floor():
 		jump(jump_force)
