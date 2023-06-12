@@ -7,12 +7,11 @@ extends Node2D
 func _ready():
 	# Get all nodes tagged as "traps"
 	var traps = get_tree().get_nodes_in_group("traps")
-	var my_array = [1,2,3, "hello"]
-	my_array.append("world") # Add "world" at the end of the array
-	my_array.remove_at(1) # Will remove 2 from the array
-	my_array.erase("hello") # Will remove the value "hello" from the array
-	print(my_array)
-	print("Size of array : " + str(my_array.size()))
+	for trap in traps:
+#		1st way to connect
+#		trap.connect("touched_player", _on_trap_touched_player)
+#		2nd way to connect (Godot4)
+		trap.touched_player.connect(_on_trap_touched_player)
 
 func _process(delta):
 	if Input.is_action_just_pressed("quit"):

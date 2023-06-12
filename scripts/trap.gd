@@ -9,5 +9,3 @@ func _on_area_2d_body_entered(body):
 #		2nd (new) way to emit signal
 		touched_player.emit()
 		
-func test():
-	print("Yo")
