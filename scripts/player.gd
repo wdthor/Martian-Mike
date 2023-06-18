@@ -4,11 +4,16 @@ class_name Player # name given to player
 @export var gravity = 400
 @export var jump_force = 200
 @export var speed = 125
+@export var mirror = false
 
 @onready var animated_sprite = $AnimatedSprite2D
 
 # The player can move
 var active = true
+
+func _ready():
+	if mirror:
+		animated_sprite.flip_h = -1
 
 func _physics_process(delta):
 	if !is_on_floor():
