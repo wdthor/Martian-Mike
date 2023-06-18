@@ -1,9 +1,11 @@
 extends Node2D
 
 @export var next_level: PackedScene = null
+@export var mirror = false
 
 @onready var start = $Start
-@onready var exit  = $Exit2
+@onready var exit  = $Exit
+@onready var death_zone = $Deathzone
 
 var player = null
 
@@ -13,6 +15,8 @@ func _ready():
 	# Note : another way of doing @onready
 	player = get_tree().get_first_node_in_group("player")
 	if player != null:
+		if mirror:
+			reverse_position()
 		player.global_position = start.get_spawn_position()
 
 	# Get nodes tagged as "traps" (created in Groups)
@@ -23,7 +27,9 @@ func _ready():
 #		2nd way to connect (Godot4)
 		trap.touched_player.connect(_on_trap_touched_player)
 	
+	# connect signals manually created to be reused on _ready
 	exit.body_entered.connect(_on_exit_body_entered)
+	death_zone.body_entered.connect(_on_deathzone_body_entered)
 
 func _process(delta):
 	if Input.is_action_just_pressed("quit"):
@@ -56,4 +62,10 @@ func _on_exit_body_entered(body):
 			player.active = false
 			await get_tree().create_timer(1.5).timeout
 			get_tree().change_scene_to_packed(next_level)
-	
+			
+func reverse_position():
+	player.animated_sprite.flip_h = -1
+	start.start_sprite.flip_h = -1
+	start.spawn_position.set_position(Vector2(-12, -24))
+	start.collision_shape.set_position(Vector2(-12, -3))
+
