@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://1wdqp6wsiiau"]
+[gd_scene load_steps=14 format=3 uid="uid://1wdqp6wsiiau"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_ad10h"]
 [ext_resource type="PackedScene" uid="uid://bx2cpenw6l5wi" path="res://scenes/player.tscn" id="2_lgvvs"]
+[ext_resource type="PackedScene" uid="uid://cn0ocf50ocabh" path="res://scenes/level_2.tscn" id="2_xfiei"]
 [ext_resource type="Texture2D" uid="uid://bp14ywbej2q6h" path="res://icon.svg" id="3_qm1ql"]
 [ext_resource type="PackedScene" uid="uid://c1ws5wjn1ghoo" path="res://scenes/jump_pad.tscn" id="4_bskbf"]
 [ext_resource type="PackedScene" uid="uid://y6djoowao2ii" path="res://scenes/saw.tscn" id="5_e6ice"]
@@ -19,6 +20,7 @@ size = Vector2(992, 20)
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_ad10h")
+next_level = ExtResource("2_xfiei")
 
 [node name="Ground" type="StaticBody2D" parent="."]
 position = Vector2(-195, -301)
@@ -74,6 +76,9 @@ position = Vector2(148, 161)
 
 [node name="Exit" parent="." instance=ExtResource("10_nre7o")]
 position = Vector2(846, 161)
+
+[node name="Exit2" parent="." instance=ExtResource("10_nre7o")]
+position = Vector2(42, 161)
 
 [node name="Player" parent="." instance=ExtResource("2_lgvvs")]
 position = Vector2(213, 125)
