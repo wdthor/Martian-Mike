@@ -7,6 +7,8 @@ extends Node2D
 @onready var start = $Start
 @onready var exit  = $Exit
 @onready var death_zone = $Deathzone
+# Timer HUD (Heads Up Display)
+@onready var hud = $UILayer/HUD
 
 var player = null
 
@@ -38,6 +40,7 @@ func _ready():
 	death_zone.body_entered.connect(_on_deathzone_body_entered)
 	
 	time_left = level_time
+	hud.set_time_label(time_left)
 	
 	# Creates a new Timer and add it to the Level scene
 	timer_node = Timer.new()
@@ -55,9 +58,11 @@ func _ready():
 func _on_level_timer_timeout():
 	if !win:
 		time_left -=1
+		
 		if time_left < 0:
 			reset_player()
 			time_left = level_time
+		hud.set_time_label(time_left)
 
 
 func _process(delta):
