@@ -2,12 +2,18 @@ extends Node2D
 
 @export var next_level: PackedScene = null
 @export var mirror = false
+@export var level_time = 5 # seconds needed to finish the level
 
 @onready var start = $Start
 @onready var exit  = $Exit
 @onready var death_zone = $Deathzone
 
 var player = null
+
+var timer_node = null
+var time_left # actual time left
+
+var win = false
 
 func _ready():
 	# Get first node tagged as "player" (created in Groups)
@@ -30,6 +36,29 @@ func _ready():
 	# connect signals manually created to be reused on _ready
 	exit.body_entered.connect(_on_exit_body_entered)
 	death_zone.body_entered.connect(_on_deathzone_body_entered)
+	
+	time_left = level_time
+	
+	# Creates a new Timer and add it to the Level scene
+	timer_node = Timer.new()
+	timer_node.name = "Level Timer"
+	timer_node.wait_time = 1
+	timer_node.timeout.connect(_on_level_timer_timeout)
+	add_child(timer_node)
+	timer_node.start()
+	
+	# Another ex of creating a node manually
+#	var cshape = CollisionShape2D.new()
+#	cshape.name = "cshape name"
+#	add_child(cshape)
+
+func _on_level_timer_timeout():
+	if !win:
+		time_left -=1
+		if time_left < 0:
+			reset_player()
+			time_left = level_time
+
 
 func _process(delta):
 	if Input.is_action_just_pressed("quit"):
@@ -42,7 +71,6 @@ func _on_deathzone_body_entered(body):
 	
 func reset_position(body):
 	reset_player()
-
 
 func _on_trap_touched_player():
 	reset_player()
@@ -60,6 +88,7 @@ func _on_exit_body_entered(body):
 		if next_level != null:
 			exit.animate()
 			player.active = false
+			win = true
 			await get_tree().create_timer(1.5).timeout
 			get_tree().change_scene_to_packed(next_level)
 			
@@ -68,4 +97,3 @@ func reverse_position():
 	start.start_sprite.flip_h = -1
 	start.spawn_position.set_position(Vector2(-12, -24))
 	start.collision_shape.set_position(Vector2(-12, -3))
-
