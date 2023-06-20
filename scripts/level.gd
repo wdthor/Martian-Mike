@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var next_level: PackedScene = null
+@export var is_final_level: bool = false
 @export var mirror = false
 @export var level_time = 5 # seconds needed to finish the level
 
@@ -9,6 +10,7 @@ extends Node2D
 @onready var death_zone = $Deathzone
 # Timer HUD (Heads Up Display)
 @onready var hud = $UILayer/HUD
+@onready var ui_layer = $UILayer
 
 var player = null
 
@@ -90,12 +92,15 @@ func _on_exit_body_entered(body):
 	# check the body is Player (classname Player)
 	if body is Player:
 		# change_scene_to_packed() can be null and will throw an error
-		if next_level != null:
+		if is_final_level || (next_level != null):
 			exit.animate()
 			player.active = false
 			win = true
 			await get_tree().create_timer(1.5).timeout
-			get_tree().change_scene_to_packed(next_level)
+			if is_final_level:
+				ui_layer.show_win_screen(true)
+			else:
+				get_tree().change_scene_to_packed(next_level)
 			
 func reverse_position():
 	player.animated_sprite.flip_h = -1

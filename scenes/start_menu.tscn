@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://dsd7f8rudc5ve"]
+
+[ext_resource type="Script" path="res://scripts/start_menu.gd" id="1_ngwlw"]
+[ext_resource type="PackedScene" uid="uid://d237qbcheeao1" path="res://scenes/background.tscn" id="1_tg1t0"]
+[ext_resource type="Texture2D" uid="uid://2snc4cfj7iri" path="res://assets/textures/bg/Green.png" id="2_ulx6c"]
+[ext_resource type="FontFile" uid="uid://sxoxk03ewkng" path="res://assets/fonts/Kenney Pixel Square.ttf" id="3_83asn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vt82w"]
+font = ExtResource("3_83asn")
+font_size = 32
+font_color = Color(0.443137, 0.0705882, 1, 1)
+outline_size = 5
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(5, 5)
+
+[node name="StartMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ngwlw")
+
+[node name="Background" parent="." instance=ExtResource("1_tg1t0")]
+bg_texture = ExtResource("2_ulx6c")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -136.0
+offset_top = -100.0
+offset_right = 136.0
+offset_bottom = -49.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Martian Mike"
+label_settings = SubResource("LabelSettings_vt82w")
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.452
+anchor_right = 0.5
+anchor_bottom = 0.452
+offset_left = -69.0
+offset_top = -22.04
+offset_right = 69.0
+offset_bottom = 15.96
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_83asn")
+theme_override_font_sizes/font_size = 20
+text = "Start"
+
+[node name="QuitButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.613
+anchor_right = 0.5
+anchor_bottom = 0.613
+offset_left = -37.0
+offset_top = -14.51
+offset_right = 38.0
+offset_bottom = 11.49
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_83asn")
+theme_override_font_sizes/font_size = 12
+text = "Quit"
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
